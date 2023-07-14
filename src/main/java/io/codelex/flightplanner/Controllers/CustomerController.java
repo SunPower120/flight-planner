@@ -7,6 +7,7 @@ import io.codelex.flightplanner.Flight.Flight;
 import io.codelex.flightplanner.Flight.FlightRequest;
 import io.codelex.flightplanner.Repositories.FlightRepository;
 import io.codelex.flightplanner.Services.FlightService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class CustomerController {
     }
 
     @PostMapping("/flights/search")
-    public ResponseEntity<PageResult<FlightRequest>> searchFlights(@RequestBody FlightRequest request) {
+    public ResponseEntity<PageResult<FlightRequest>> searchFlights(@Valid @RequestBody FlightRequest request) {
         if (!flightService.isFlightRequestValid(request)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

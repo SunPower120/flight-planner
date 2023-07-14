@@ -3,6 +3,7 @@ package io.codelex.flightplanner.Controllers;
 import io.codelex.flightplanner.Flight.Flight;
 import io.codelex.flightplanner.Repositories.FlightRepository;
 import io.codelex.flightplanner.Services.FlightService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class AdminController {
     }
 
     @PutMapping("/flights")
-    public ResponseEntity<?> createFlight(@RequestBody Flight flight) {
+    public ResponseEntity<?> createFlight(@Valid @RequestBody Flight flight) {
         try {
             if (flightService.isFlightValid(flight)) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

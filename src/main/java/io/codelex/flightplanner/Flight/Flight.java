@@ -1,13 +1,20 @@
 package io.codelex.flightplanner.Flight;
 
 
+import jakarta.validation.constraints.NotBlank;
+
 public class Flight {
 
     private Long id;
+
     private Airport from;
+
     private Airport to;
+    @NotBlank
     private String carrier;
+    @NotBlank
     private String departureTime;
+    @NotBlank
     private String arrivalTime;
 
     public Flight(Long id, Airport from, Airport to, String carrier, String departureTime, String arrivalTime) {

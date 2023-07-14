@@ -35,26 +35,7 @@ public class FlightService {
     }
 
     public boolean isFlightValid(Flight flight) {
-        if (flight.getFrom().getAirport() == null ||
-                flight.getFrom().getAirport().trim().isEmpty() ||
-                flight.getFrom().getCity() == null ||
-                flight.getFrom().getCity().trim().isEmpty() ||
-                flight.getFrom().getCountry() == null ||
-                flight.getFrom().getCountry().trim().isEmpty() ||
-                flight.getTo().getAirport() == null ||
-                flight.getTo().getAirport().trim().isEmpty() ||
-                flight.getTo().getCity() == null ||
-                flight.getTo().getCity().trim().isEmpty() ||
-                flight.getTo().getCountry() == null ||
-                flight.getTo().getCountry().trim().isEmpty() ||
-                flight.getCarrier() == null ||
-                flight.getCarrier().trim().isEmpty() ||
-                flight.getDepartureTime() == null ||
-                flight.getDepartureTime().trim().isEmpty() ||
-                flight.getArrivalTime() == null ||
-                flight.getArrivalTime().trim().isEmpty()) {
-            return false;
-        }
+
         if (flight.getFrom().getCountry().replaceAll("\\s+", "")
                 .equalsIgnoreCase(flight.getTo().getCountry().replaceAll("\\s+", "")) &&
                 flight.getFrom().getCity().replaceAll("\\s+", "")
@@ -78,17 +59,9 @@ public class FlightService {
     }
 
     public boolean isFlightRequestValid(FlightRequest flight) {
-        if (flight.getFrom() == null ||
-                flight.getFrom().trim().isEmpty() ||
-                flight.getTo() == null ||
-                flight.getTo().trim().isEmpty() ||
-                flight.getDepartureDate() == null ||
-                flight.getDepartureDate().trim().isEmpty()) {
-            return false;
-        } else {
-            return !flight.getFrom().equals(flight.getTo());
-        }
+        return !flight.getFrom().equals(flight.getTo());
     }
 }
+
 
 

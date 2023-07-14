@@ -1,9 +1,13 @@
 package io.codelex.flightplanner.Flight;
 
-public class Airport {
+import jakarta.validation.constraints.NotBlank;
 
+public class Airport {
+    @NotBlank
     private String country;
+    @NotBlank
     private String city;
+    @NotBlank
     private String airport;
 
     public Airport(String country, String city, String airport) {
