@@ -3,7 +3,9 @@ package io.codelex.flightplanner.Services;
 import io.codelex.flightplanner.Flight.Flight;
 import io.codelex.flightplanner.Flight.FlightRequest;
 import io.codelex.flightplanner.Repositories.FlightRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
@@ -16,10 +18,6 @@ public class FlightService {
 
     public FlightService(FlightRepository flightRepository) {
         this.flightRepository = flightRepository;
-    }
-
-    public Optional<Flight> getFlight(Long id) {
-        return flightRepository.getFlight(id);
     }
 
     public Flight createFlight(Flight flight) {
@@ -60,6 +58,14 @@ public class FlightService {
 
     public boolean isFlightRequestValid(FlightRequest flight) {
         return !flight.getFrom().equals(flight.getTo());
+    }
+
+    public Optional<Flight> getFlight(Long id) {
+        Optional<Flight> flight = flightRepository.getFlight(id);
+        if (flight.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return flight;
     }
 }
 

@@ -1,14 +1,18 @@
 package io.codelex.flightplanner.Flight;
 
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class Flight {
 
     private Long id;
-
+    @Valid
+    @NotNull
     private Airport from;
-
+    @Valid
+    @NotNull
     private Airport to;
     @NotBlank
     private String carrier;
@@ -79,6 +83,7 @@ public class Flight {
         if (this == o) return true;
         if (!(o instanceof Flight flight)) return false;
 
+        if (getId() != null ? !getId().equals(flight.getId()) : flight.getId() != null) return false;
         if (getFrom() != null ? !getFrom().equals(flight.getFrom()) : flight.getFrom() != null) return false;
         if (getTo() != null ? !getTo().equals(flight.getTo()) : flight.getTo() != null) return false;
         if (getCarrier() != null ? !getCarrier().equals(flight.getCarrier()) : flight.getCarrier() != null)
@@ -90,7 +95,8 @@ public class Flight {
 
     @Override
     public int hashCode() {
-        int result = getFrom() != null ? getFrom().hashCode() : 0;
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getFrom() != null ? getFrom().hashCode() : 0);
         result = 31 * result + (getTo() != null ? getTo().hashCode() : 0);
         result = 31 * result + (getCarrier() != null ? getCarrier().hashCode() : 0);
         result = 31 * result + (getDepartureTime() != null ? getDepartureTime().hashCode() : 0);

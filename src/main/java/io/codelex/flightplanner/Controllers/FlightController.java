@@ -1,13 +1,10 @@
 package io.codelex.flightplanner.Controllers;
 
-import io.codelex.flightplanner.Flight.Airport;
+import io.codelex.flightplanner.Flight.Flight;
 import io.codelex.flightplanner.Services.FlightService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/flights")
@@ -20,10 +17,9 @@ public class FlightController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getFlight(@PathVariable Long id) {
-        return flightService.getFlight(id)
-                .map(ResponseEntity::ok)
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public Optional<Flight> getFlight(@PathVariable Long id) {
+        return flightService.getFlight(id);
+
     }
 
 
