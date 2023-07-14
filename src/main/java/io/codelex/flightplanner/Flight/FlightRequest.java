@@ -1,13 +1,17 @@
 package io.codelex.flightplanner.Flight;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class FlightRequest {
     @NotBlank
+    @NotNull
     String from;
     @NotBlank
+    @NotNull
     String to;
     @NotBlank
+    @NotNull
     String departureDate;
 
     public FlightRequest(String from, String to, String departureDate) {

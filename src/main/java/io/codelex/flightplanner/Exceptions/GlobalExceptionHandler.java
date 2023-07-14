@@ -10,6 +10,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidFlightRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void handleInvalidFlightRequestException() {
-        
+
+    }
+
+    @ExceptionHandler(NoMatchingFlights.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void handleNoMatchingFlights() {
+
     }
 }

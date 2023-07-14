@@ -2,12 +2,13 @@ package io.codelex.flightplanner.Services;
 
 import io.codelex.flightplanner.Dto.PageResult;
 import io.codelex.flightplanner.Exceptions.InvalidFlightRequestException;
+import io.codelex.flightplanner.Exceptions.NoMatchingFlights;
 import io.codelex.flightplanner.Flight.Airport;
 import io.codelex.flightplanner.Flight.Flight;
 import io.codelex.flightplanner.Flight.FlightRequest;
 import io.codelex.flightplanner.Repositories.FlightRepository;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,12 +41,10 @@ public class CustomerService {
                 .toList();
     }
 
-    public Object searchFlights(@Valid @RequestBody FlightRequest request) {
+    public PageResult<FlightRequest> searchFlights(@Valid @RequestBody FlightRequest request) {
+        
         if (!flightService.isFlightRequestValid(request)) {
             throw new InvalidFlightRequestException();
-        }
-        if (!flightRepository.getSavedFlights().contains(request)) {
-            throw new NoSuchElementException();
         }
 
         List<Flight> flights = flightRepository.getSavedFlights().stream()
@@ -69,7 +68,7 @@ public class CustomerService {
         if (flightOptional.isPresent()) {
             return flightOptional.get();
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new NoMatchingFlights();
         }
     }
 }

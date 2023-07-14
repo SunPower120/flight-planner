@@ -1,13 +1,18 @@
 package io.codelex.flightplanner.Controllers;
 
+import io.codelex.flightplanner.Exceptions.InvalidFlightRequestException;
 import io.codelex.flightplanner.Flight.Airport;
 import io.codelex.flightplanner.Flight.Flight;
 import io.codelex.flightplanner.Flight.FlightRequest;
 import io.codelex.flightplanner.Services.CustomerService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 @RestController
@@ -27,8 +32,17 @@ public class CustomerController {
     }
 
     @PostMapping("/flights/search")
-    public Object searchFlights(@Valid @RequestBody FlightRequest request) {
-        return customerService.searchFlights(request);
+    public ResponseEntity<?> searchFlights(@Valid @RequestBody FlightRequest request, BindingResult result) {
+        if (result.hasErrors()) {
+            return new ResponseEntity<>("Invalid Flight Request", HttpStatus.BAD_REQUEST);
+        }
+        try {
+            return new ResponseEntity<>(customerService.searchFlights(request), HttpStatus.OK);
+        } catch (InvalidFlightRequestException ex) {
+            return new ResponseEntity<>("Invalid Flight Request", HttpStatus.BAD_REQUEST);
+        } catch (NoSuchElementException ex) {
+            return new ResponseEntity<>("No Matching Flights", HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/flights/{id}")

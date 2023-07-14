@@ -3,6 +3,7 @@ package io.codelex.flightplanner.Services;
 import io.codelex.flightplanner.Flight.Flight;
 import io.codelex.flightplanner.Flight.FlightRequest;
 import io.codelex.flightplanner.Repositories.FlightRepository;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
