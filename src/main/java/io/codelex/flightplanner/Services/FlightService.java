@@ -67,6 +67,10 @@ public class FlightService {
         }
         return flight;
     }
+
+    public void clear() {
+        flightRepository.getSavedFlights().clear();
+    }
 }
 
 

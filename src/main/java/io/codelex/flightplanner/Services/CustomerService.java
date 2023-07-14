@@ -1,6 +1,7 @@
 package io.codelex.flightplanner.Services;
 
 import io.codelex.flightplanner.Dto.PageResult;
+import io.codelex.flightplanner.Exceptions.InvalidFlightRequestException;
 import io.codelex.flightplanner.Flight.Airport;
 import io.codelex.flightplanner.Flight.Flight;
 import io.codelex.flightplanner.Flight.FlightRequest;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -40,7 +42,10 @@ public class CustomerService {
 
     public Object searchFlights(@Valid @RequestBody FlightRequest request) {
         if (!flightService.isFlightRequestValid(request)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new InvalidFlightRequestException();
+        }
+        if (!flightRepository.getSavedFlights().contains(request)) {
+            throw new NoSuchElementException();
         }
 
         List<Flight> flights = flightRepository.getSavedFlights().stream()

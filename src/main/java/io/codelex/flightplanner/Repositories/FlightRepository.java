@@ -28,8 +28,5 @@ public class FlightRepository {
         savedFlights.remove(flight);
     }
 
-    public void clearFlights() {
-        savedFlights.clear();
-    }
 }
 
